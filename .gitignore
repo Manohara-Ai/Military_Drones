@@ -1,7 +1,55 @@
-drone_gui.py
-banana/
-car/
-horse/
-man/
-pot/
-zebra/
+# -------------------
+# ROS (Catkin / ROS 2)
+# -------------------
+
+# Build folders
+build/
+devel/
+install/
+
+# Logs
+log/
+
+# ROS 2 colcon build directories
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Ignore .ros folder (runtime files)
+.ros/
+
+# Ignore test result files
+test_results/
+
+# -------------------
+# Python
+# -------------------
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# IDE / editor specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Mac / Linux
+.DS_Store
+*.bak
+*.tmp
