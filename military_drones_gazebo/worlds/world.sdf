@@ -1,0 +1,213 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="playground">
+    <plugin
+      filename="ignition-gazebo-physics-system"
+      name="ignition::gazebo::systems::Physics">
+    </plugin>
+    <plugin
+      filename="ignition-gazebo-sensors-system"
+      name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin
+      filename="ignition-gazebo-scene-broadcaster-system"
+      name="ignition::gazebo::systems::SceneBroadcaster">
+    </plugin>
+    <plugin
+      filename="ignition-gazebo-user-commands-system"
+      name="ignition::gazebo::systems::UserCommands">
+    </plugin>
+    <plugin
+      filename="BasicSystem"
+      name="military_drones_gazebo::BasicSystem">
+    </plugin>
+    <plugin
+      filename="FullSystem"
+      name="military_drones_gazebo::FullSystem">
+    </plugin>
+
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1 1</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="X3_1">
+      <self_collide>true</self_collide>
+      <pose>-10 5 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/X3_1</uri>
+      </include>
+
+      <plugin
+        filename="ignition-gazebo-joint-state-publisher-system"
+        name="ignition::gazebo::systems::JointStatePublisher">
+      </plugin>
+
+      <plugin
+        filename="ignition-gazebo-pose-publisher-system"
+        name="ignition::gazebo::systems::PosePublisher">
+        <publish_link_pose>true</publish_link_pose>
+        <use_pose_vector_msg>true</use_pose_vector_msg>
+        <static_publisher>true</static_publisher>
+        <static_update_frequency>1</static_update_frequency>
+      </plugin>
+
+      <plugin
+        filename="ignition-gazebo-odometry-publisher-system"
+        name="ignition::gazebo::systems::OdometryPublisher">
+          <odom_frame>X3_1/odom</odom_frame>
+          <robot_base_frame>X3_1/base_link</robot_base_frame>
+          <update_rate>50</update_rate>
+          <topic>/model/X3_1/odometry</topic>
+      </plugin>
+    </model>
+    
+    <model name="X3_2">
+      <self_collide>true</self_collide>
+      <pose>5 10 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/X3_2</uri>
+      </include>
+
+      <plugin
+        filename="ignition-gazebo-joint-state-publisher-system"
+        name="ignition::gazebo::systems::JointStatePublisher">
+      </plugin>
+
+      <plugin
+        filename="ignition-gazebo-pose-publisher-system"
+        name="ignition::gazebo::systems::PosePublisher">
+        <publish_link_pose>true</publish_link_pose>
+        <use_pose_vector_msg>true</use_pose_vector_msg>
+        <static_publisher>true</static_publisher>
+        <static_update_frequency>1</static_update_frequency>
+      </plugin>
+
+      <plugin
+        filename="ignition-gazebo-odometry-publisher-system"
+        name="ignition::gazebo::systems::OdometryPublisher">
+          <odom_frame>X3_2/odom</odom_frame>
+          <robot_base_frame>X3_2/base_link</robot_base_frame>
+          <update_rate>50</update_rate>
+          <topic>/model/X3_2/odometry</topic>
+      </plugin>
+    </model>
+
+    <model name="X3_3">
+      <self_collide>true</self_collide>
+      <pose>-10 -5 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/X3_3</uri>
+      </include>
+
+      <plugin
+        filename="ignition-gazebo-joint-state-publisher-system"
+        name="ignition::gazebo::systems::JointStatePublisher">
+      </plugin>
+
+      <plugin
+        filename="ignition-gazebo-pose-publisher-system"
+        name="ignition::gazebo::systems::PosePublisher">
+        <publish_link_pose>true</publish_link_pose>
+        <use_pose_vector_msg>true</use_pose_vector_msg>
+        <static_publisher>true</static_publisher>
+        <static_update_frequency>1</static_update_frequency>
+      </plugin>
+
+      <plugin
+        filename="ignition-gazebo-odometry-publisher-system"
+        name="ignition::gazebo::systems::OdometryPublisher">
+          <odom_frame>X3_3/odom</odom_frame>
+          <robot_base_frame>X3_3/base_link</robot_base_frame>
+          <update_rate>50</update_rate>
+          <topic>/model/X3_3/odometry</topic>
+      </plugin>
+    </model>
+
+    <!-- Other models -->
+    <model name="banana">
+      <self_collide>true</self_collide>
+      <pose>5 -5 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/banana</uri>
+      </include>
+    </model>
+
+    <model name="car">
+      <self_collide>true</self_collide>
+      <pose>-5 5 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/car</uri>
+      </include>
+    </model>
+
+    <model name="horse">
+      <self_collide>true</self_collide>
+      <pose>0 0 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/horse</uri>
+      </include>
+    </model>
+
+    <model name="man">
+      <self_collide>true</self_collide>
+      <pose>5 5 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/man</uri>
+      </include>
+    </model>
+
+    <model name="pot">
+      <self_collide>true</self_collide>
+      <pose>-5 0 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/pot</uri>
+      </include>
+    </model>
+
+    <model name="zebra">
+      <self_collide>true</self_collide>
+      <pose>-5 -5 0 0 0 0</pose>
+      <include merge="true">
+        <uri>package://military_drones_description/models/zebra</uri>
+      </include>
+    </model>
+  </world>
+</sdf>
