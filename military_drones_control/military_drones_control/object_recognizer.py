@@ -8,7 +8,10 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import cv2
+from ament_index_python.packages import get_package_share_directory
+from pathlib import Path
 
+pkg_share = get_package_share_directory('military_drones_control')
 
 class YOLOTFLite:
     def __init__(self, model: str, conf: float = 0.25, iou: float = 0.45, metadata: Union[str, None] = None):
@@ -135,8 +138,8 @@ class YOLONode(Node):
 
         # Load detector
         self.detector = YOLOTFLite(
-            "/home/manohara/ros_ws/src/military_drones/resources/yolo11n_float32.tflite",
-            metadata="/home/manohara/ros_ws/src/military_drones/resources/coco.yaml"
+            model=str(Path(pkg_share) / 'yolo11n_float32.tflite'),
+            metadata=str(Path(pkg_share) / 'coco.yaml')
         )
 
         self.bridge = CvBridge()

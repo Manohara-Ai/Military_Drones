@@ -10,6 +10,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name, ['resources/yolo11n_float32.tflite', 'resources/coco.yaml'])
     ],
     install_requires=['setuptools'],
     zip_safe=True,
