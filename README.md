@@ -1,3 +1,5 @@
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 # Military Drones Simulation
 
 A ROS 2 Humble + Gazebo based multi-drone surveillance simulation. The system implements a **swarm of three modified X3 quadcopters** equipped with cameras and onboard object detection using YOLOv11.
@@ -33,7 +35,7 @@ military_drones/
 
 ## 🚀 Installation
 
-Tested on **Ubuntu 22.04 (Jammy Jellyfish)** with **ROS 2 Humble**.
+Tested on **Ubuntu 24.04 (Noble Numbat)** with **ROS 2 Jazzy** on **Gazebo Harmonic**.
 
 ```bash
 # Clone the repository
