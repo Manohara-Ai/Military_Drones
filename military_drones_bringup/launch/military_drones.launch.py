@@ -1,7 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, SetEnvironmentVariable
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
@@ -17,6 +17,15 @@ def generate_launch_description():
         default_value="true",
         description="Whether to launch RViz"
     )
+
+    # Conditionally set NVIDIA GPU variables if the driver exists
+    env_actions = []
+    if os.path.exists("/proc/driver/nvidia/version"):
+        env_actions.extend([
+            SetEnvironmentVariable(name="__NV_PRIME_RENDER_OFFLOAD", value="1"),
+            SetEnvironmentVariable(name="__GLX_VENDOR_LIBRARY_NAME", value="nvidia"),
+            SetEnvironmentVariable(name="__VK_LAYER_NV_optimus", value="NVIDIA_only"),
+        ])
 
     # Launch Ignition Gazebo with your world
     gz_sim = IncludeLaunchDescription(
@@ -48,41 +57,22 @@ def generate_launch_description():
        condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
-    flight_controller_1 = Node(
-        package='military_drones_control',
-        executable='flight_controller',
-        parameters=[{
-            'namespace': 'X3_1',
-            'initial_x': 0.0,
-            'initial_y': 0.0,
-            'initial_z': 0.0
-        }],
-        output='screen',
-    )
-
-    flight_controller_2 = Node(
-        package='military_drones_control',
-        executable='flight_controller',
-        parameters=[{
-            'namespace': 'X3_2',
-            'initial_x': 5.0,
-            'initial_y': 0.0,
-            'initial_z': 0.0
-        }],
-        output='screen',
-    )
-
-    flight_controller_3 = Node(
-        package='military_drones_control',
-        executable='flight_controller',
-        parameters=[{
-            'namespace': 'X3_3',
-            'initial_x': 0.0,
-            'initial_y': 5.0,
-            'initial_z': 0.0
-        }],
-        output='screen',
-    )
+    # Flight controllers
+    flight_controllers = []
+    positions = [(0.0,0.0,0.0), (5.0,0.0,0.0), (0.0,5.0,0.0)]
+    namespaces = ['X3_1','X3_2','X3_3']
+    for ns, pos in zip(namespaces, positions):
+        flight_controllers.append(
+            Node(
+                package='military_drones_control',
+                executable='flight_controller',
+                parameters=[{'namespace': ns,
+                             'initial_x': pos[0],
+                             'initial_y': pos[1],
+                             'initial_z': pos[2]}],
+                output='screen'
+            )
+        )
 
     drone_gui = Node(
         package='military_drones_control',
@@ -90,20 +80,9 @@ def generate_launch_description():
         output='screen',
     )
 
-    object_recognizer = Node(
-        package='military_drones_control',
-        executable='object_recognizer',
-        output='screen',
+    return LaunchDescription(
+        env_actions +
+        [declare_rviz, gz_sim, bridge] +
+        flight_controllers +
+        [drone_gui]
     )
-
-    return LaunchDescription([
-        declare_rviz,
-        gz_sim,
-        bridge,
-        # rviz,
-        object_recognizer,
-        flight_controller_1,
-        flight_controller_2,
-        flight_controller_3,
-        drone_gui
-    ])
