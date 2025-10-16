@@ -2,7 +2,7 @@
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 # Military Drones Simulation
 
-A ROS 2 Humble + Gazebo based multi-drone surveillance simulation. The system implements a **swarm of three modified X3 quadcopters** equipped with cameras and onboard object detection using YOLOv11.
+A ROS 2 Jazzy + Gazebo Harmonic based multi-drone surveillance simulation. The system implements a **swarm of three modified X3 quadcopters** equipped with cameras and onboard object detection using YOLOv11.
 
 ---
 
