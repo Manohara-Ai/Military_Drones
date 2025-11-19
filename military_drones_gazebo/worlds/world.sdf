@@ -2,20 +2,20 @@
 <sdf version="1.8">
   <world name="playground">
     <plugin
-      filename="ignition-gazebo-physics-system"
+      filename="gz-sim-physics-system"
       name="ignition::gazebo::systems::Physics">
     </plugin>
     <plugin
-      filename="ignition-gazebo-sensors-system"
+      filename="gz-sim-sensors-system"
       name="ignition::gazebo::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
     <plugin
-      filename="ignition-gazebo-scene-broadcaster-system"
+      filename="gz-sim-scene-broadcaster-system"
       name="ignition::gazebo::systems::SceneBroadcaster">
     </plugin>
     <plugin
-      filename="ignition-gazebo-user-commands-system"
+      filename="gz-sim-user-commands-system"
       name="ignition::gazebo::systems::UserCommands">
     </plugin>
     <plugin
@@ -76,12 +76,12 @@
       </include>
 
       <plugin
-        filename="ignition-gazebo-joint-state-publisher-system"
+        filename="gz-sim-joint-state-publisher-system"
         name="ignition::gazebo::systems::JointStatePublisher">
       </plugin>
 
       <plugin
-        filename="ignition-gazebo-pose-publisher-system"
+        filename="gz-sim-pose-publisher-system"
         name="ignition::gazebo::systems::PosePublisher">
         <publish_link_pose>true</publish_link_pose>
         <use_pose_vector_msg>true</use_pose_vector_msg>
@@ -90,7 +90,7 @@
       </plugin>
 
       <plugin
-        filename="ignition-gazebo-odometry-publisher-system"
+        filename="gz-sim-odometry-publisher-system"
         name="ignition::gazebo::systems::OdometryPublisher">
           <odom_frame>X3_1/odom</odom_frame>
           <robot_base_frame>X3_1/base_link</robot_base_frame>
@@ -107,12 +107,12 @@
       </include>
 
       <plugin
-        filename="ignition-gazebo-joint-state-publisher-system"
+        filename="gz-sim-joint-state-publisher-system"
         name="ignition::gazebo::systems::JointStatePublisher">
       </plugin>
 
       <plugin
-        filename="ignition-gazebo-pose-publisher-system"
+        filename="gz-sim-pose-publisher-system"
         name="ignition::gazebo::systems::PosePublisher">
         <publish_link_pose>true</publish_link_pose>
         <use_pose_vector_msg>true</use_pose_vector_msg>
@@ -121,7 +121,7 @@
       </plugin>
 
       <plugin
-        filename="ignition-gazebo-odometry-publisher-system"
+        filename="gz-sim-odometry-publisher-system"
         name="ignition::gazebo::systems::OdometryPublisher">
           <odom_frame>X3_2/odom</odom_frame>
           <robot_base_frame>X3_2/base_link</robot_base_frame>
@@ -138,12 +138,12 @@
       </include>
 
       <plugin
-        filename="ignition-gazebo-joint-state-publisher-system"
+        filename="gz-sim-joint-state-publisher-system"
         name="ignition::gazebo::systems::JointStatePublisher">
       </plugin>
 
       <plugin
-        filename="ignition-gazebo-pose-publisher-system"
+        filename="gz-sim-pose-publisher-system"
         name="ignition::gazebo::systems::PosePublisher">
         <publish_link_pose>true</publish_link_pose>
         <use_pose_vector_msg>true</use_pose_vector_msg>
@@ -152,7 +152,7 @@
       </plugin>
 
       <plugin
-        filename="ignition-gazebo-odometry-publisher-system"
+        filename="gz-sim-odometry-publisher-system"
         name="ignition::gazebo::systems::OdometryPublisher">
           <odom_frame>X3_3/odom</odom_frame>
           <robot_base_frame>X3_3/base_link</robot_base_frame>
@@ -161,7 +161,6 @@
       </plugin>
     </model>
 
-    <!-- Other models -->
     <model name="banana">
       <self_collide>true</self_collide>
       <pose>5 -5 0 0 0 0</pose>
