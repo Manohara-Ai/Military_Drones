@@ -6,7 +6,7 @@ A ROS 2 Jazzy + Gazebo Harmonic based multi-drone surveillance simulation. The s
 
 ---
 
-## ✨ Features
+## Features
 
 * **Three surveillance drones** (`X3_1`, `X3_2`, `X3_3`) modeled in Gazebo.
 * **Custom onboard cameras** for live video feeds.
@@ -18,7 +18,7 @@ A ROS 2 Jazzy + Gazebo Harmonic based multi-drone surveillance simulation. The s
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 military_drones/
@@ -33,7 +33,7 @@ military_drones/
 
 ---
 
-## 🚀 Installation
+## Installation
 
 Tested on **Ubuntu 24.04 (Noble Numbat)** with **ROS 2 Jazzy** on **Gazebo Harmonic**.
 
@@ -54,7 +54,7 @@ source install/setup.bash
 
 ---
 
-## ▶️ Running the Simulation
+## Running the Simulation
 
 Launch the full system:
 
@@ -72,7 +72,7 @@ This will:
 
 ---
 
-## 📦 Packages
+## Packages
 
 ### `military_drones_bringup`
 
@@ -99,7 +99,7 @@ This will:
 
 ---
 
-## 📌 Future Work
+## Future Work
 
 * Enhance multi-drone autonomy with reinforcement learning.
 * Implement SLAM-based navigation.
@@ -108,12 +108,12 @@ This will:
 
 ---
 
-## 👨‍💻 Authors
+## Authors
 
 Developed by **[Manohara B M](https://github.com/Manohara-Ai)** & **[Vibhashree Vasuki](https://github.com/paaduka32)**.
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
