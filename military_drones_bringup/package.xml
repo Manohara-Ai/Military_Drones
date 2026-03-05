@@ -4,10 +4,10 @@
   <name>military_drones_bringup</name>
   <version>0.0.0</version>
   <description>Contains launch files for the military drones project</description>
-  <maintainer email="manohara01012005@gmail.com">manohara</maintainer>
-  <license>MIT license</license>
-  <author>manohara</author>
-  <author>vibha</author>
+  <maintainer email="manohara01012005@gmail.com">Manohara</maintainer>
+  <license>Apache 2.0</license>
+  <author>Manohara</author>
+  <author>Vibhashree</author>
 
   <depend>ros_gz</depend>
   <depend>sdformat_urdf</depend>

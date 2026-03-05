@@ -1,119 +1,233 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 # Military Drones Simulation
 
-A ROS 2 Jazzy + Gazebo Harmonic based multi-drone surveillance simulation. The system implements a **swarm of three modified X3 quadcopters** equipped with cameras and onboard object detection using YOLOv11.
+Simulation setup for multi-drone surveillance using ROS 2 and the Gazebo simulator.
 
 ---
 
-## Features
+# Workspace Structure Assumption
 
-* **Three surveillance drones** (`X3_1`, `X3_2`, `X3_3`) modeled in Gazebo.
-* **Custom onboard cameras** for live video feeds.
-* **YOLOv11 TFLite-based object recognition** via `object_recognizer.py`.
-* **Centralized swarm planner** for multi-drone coordination.
-* **GUI (`drone_gui.py`)** to monitor and interact with drones.
-* **ROS 2 ↔ Gazebo bridge** for control and sensor integration.
-* Predefined **environment objects** (car, horse, man, zebra, etc.).
-
----
-
-## Repository Structure
+This project assumes the following ROS 2 workspace layout:
 
 ```
-military_drones/
-├── LICENSE                         # License file
-├── military_drones_bringup          # Launch and configs
-├── military_drones_control          # Control nodes, GUI, object recognition
-│   └── resources                    # YOLO model + dataset configs
-├── military_drones_description      # Drone and environment models
-├── military_drones_gazebo           # Gazebo plugins and worlds
-└── README.md                        # Project documentation
+~/ros2_ws/
+├── src/
+│   └── Military_Drones/
+├── build/
+├── install/
+└── log/
 ```
 
----
-
-## Installation
-
-Tested on **Ubuntu 24.04 (Noble Numbat)** with **ROS 2 Jazzy** on **Gazebo Harmonic**.
+If you do not already have a workspace:
 
 ```bash
-# Clone the repository
-cd ~/ros_ws/src
-git clone github.com/Manohara-Ai/Military_Drones military_drones
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+colcon build
+```
 
-# Install dependencies
+---
+
+## Included packages
+
+* `military_drones_description` - URDF/SDF drone models and mesh files.
+
+* `military_drones_gazebo` - Gazebo Sim plugins and world configurations.
+
+* `military_drones_application` - Holds ros2 specific code and configurations.
+
+* `military_drones_bringup` - Holds launch files and high level utilities.
+
+---
+
+# System Requirements
+
+| Component | Version |
+|-----------|----------|
+| OS | Ubuntu 22.04 LTS |
+| ROS 2 | [Humble Hawksbill](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html) |
+| Gazebo | [Harmonic (8.10.0)](https://gazebosim.org/docs/latest/ros_installation/#gazebo-harmonic-with-ros-2-humble) |
+| Python | 3.10.x |
+
+Using other versions may require modifications.
+
+---
+
+# Installation
+
+## 1. Clone Repository (Inside src/)
+
+```bash
+cd ~/ros2_ws/src
+git clone https://github.com/Manohara-Ai/Military_Drones
+```
+
+---
+
+## 2. Install ROS 2 Dependencies
+
+All commands below must be run from the workspace root:
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+```
+
+Initialize rosdep (only once per system):
+
+```bash
+sudo rosdep init
+rosdep update
+```
+
+Install dependencies:
+
+```bash
+rosdep install --from-paths src --ignore-src -r -i -y --rosdistro humble
+```
+
+---
+
+## 3. Install Build Tools
+
+```bash
 sudo apt update
-rosdep install --from-paths src --ignore-src -r -y
+sudo apt install -y python3-colcon-common-extensions
+```
 
-# Build workspace
-cd ~/ros_ws
+---
+
+## 4. Gazebo Harmonic Configuration
+
+ROS 2 Humble does not default to Gazebo Harmonic.
+
+Ensure Gazebo Harmonic is installed.
+
+Export the version before building or launching:
+
+```bash
+export GZ_VERSION=harmonic
+```
+
+(Optional) Add to your ~/.bashrc:
+
+```bash
+echo "export GZ_VERSION=harmonic" >> ~/.bashrc
+```
+
+---
+
+# Build Instructions
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+colcon build
+```
+
+If build issues occur:
+
+```bash
+cd ~/ros2_ws
+rm -rf build/ install/ log/
+colcon build
+```
+
+---
+
+# Source the Workspace
+
+Every new terminal must run:
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+```
+
+(Optional) Add to ~/.bashrc:
+
+```bash
+echo -e "source /opt/ros/humble/setup.bash\nsource ~/ros2_ws/install/setup.bash" >> ~/.bashrc
+```
+
+---
+
+# Running the Simulation
+
+## Launch Gazebo Simulation
+
+```bash
+ros2 launch military_drones_bringup military_drones.launch.py
+```
+
+## Launch with RVIZ
+
+```bash
+ros2 launch military_drones_bringup military_drones.launch.py rviz:=true
+```
+
+---
+
+# Development Workflow
+
+After modifying any package:
+
+```bash
+cd ~/ros2_ws
 colcon build
 source install/setup.bash
 ```
 
 ---
 
-## Running the Simulation
+# Known Issue: Gazebo Hanging at "Requesting world names"
 
-Launch the full system:
+Gazebo may hang at:
 
-```bash
-ros2 launch military_drones_bringup military_drones.launch.py
+```
+Requesting world names
 ```
 
-This will:
+Possible causes:
+- Stale build artifacts
+- Plugin load timing issue
+- Corrupted install space
 
-* Spawn the **3 X3 quadcopters** in Gazebo.
-* Start swarm control nodes (`central_planner`, `flight_controller`).
-* Run **YOLOv11 object recognition** (`object_recognizer`).
-* Open the **GUI** and RViz visualization.
-* Establish ROS 2 ↔ Gazebo bridges.
+Recommended fix:
 
----
+```bash
+cd ~/ros2_ws
+rm -rf build/ install/ log/
+colcon build
+source install/setup.bash
+```
 
-## Packages
-
-### `military_drones_bringup`
-
-* Launch files & configs.
-* RViz visualization setup.
-
-### `military_drones_control`
-
-* `central_planner.py` → swarm mission coordination.
-* `flight_controller.py` → per-drone control.
-* `object_recognizer.py` → YOLOv11 inference.
-* `drone_gui.py` → live monitoring GUI.
-* `resources/` → contains YOLO model & dataset labels.
-
-### `military_drones_description`
-
-* Models of drones & environment objects.
-* Textures, meshes, SDF configs.
-
-### `military_drones_gazebo`
-
-* Gazebo world (`world.sdf`).
-* Plugins for system simulation.
+Then relaunch the simulation.
 
 ---
 
-## Future Work
+# Contributing
 
-* Enhance multi-drone autonomy with reinforcement learning.
-* Implement SLAM-based navigation.
-* Add real-time communication between drones.
-* Improve GUI with mission planning tools.
+1. Fork the repository  
+2. Create a feature branch:
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. Commit changes:
+   ```bash
+   git commit -m "Add AmazingFeature"
+   ```
+4. Push branch:
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. Open a Pull Request
 
 ---
 
 ## Authors
 
-Developed by **[Manohara B M](https://github.com/Manohara-Ai)** & **[Vibhashree Vasuki](https://github.com/paaduka32)**.
+Developed by **[Manohara](https://github.com/Manohara-Ai)** & **[Vibhashree](https://github.com/paaduka32)**.
 
 ---
-
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
